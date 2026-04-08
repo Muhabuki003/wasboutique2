@@ -159,88 +159,24 @@
     }
 
     /* Dark gradient overlay for depth */
-    #hero-pin::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse at center 60%, transparent 30%, rgba(0,0,0,0.55) 100%),
-        linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 40%, rgba(0,0,0,0.7) 100%);
-      z-index: 1;
-      pointer-events: none;
-    }
+    
 
     /* Pink/gold atmospheric glow */
-    #hero-pin::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 45%;
-      background: linear-gradient(to top, rgba(10,10,10,1) 0%, rgba(10,10,10,0.6) 50%, transparent 100%);
-      z-index: 2;
-      pointer-events: none;
-    }
+    
 
     /* Logo overlay */
-    #hero-logo-overlay {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 5;
-      opacity: 0;
-      pointer-events: none;
-    }
-    #hero-logo-overlay img {
-      width: clamp(220px, 30vw, 380px);
-      filter: drop-shadow(0 0 40px rgba(233,30,140,0.6)) drop-shadow(0 0 80px rgba(201,168,76,0.3));
-    }
-    #hero-logo-overlay .tagline {
-      margin-top: 18px;
-      font-family: var(--font-sans);
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.45em;
-      text-transform: uppercase;
-      color: var(--gold-light);
-      text-shadow: 0 0 20px rgba(201,168,76,0.8);
-    }
+    
+    
+    
 
     /* Scroll indicator */
-    #scroll-indicator {
-      position: absolute;
-      bottom: 36px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      animation: fadeInUp 1.2s ease 1.5s both;
-    }
-    #scroll-indicator span {
-      font-family: var(--font-sans);
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.6);
-    }
-    .scroll-line {
-      width: 1px;
-      height: 48px;
-      background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
-    }
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.4; transform: scaleY(0.8); }
+    
+    
+    
+    
       50% { opacity: 1; transform: scaleY(1); }
     }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateX(-50%) translateY(16px); }
+    
       to   { opacity: 1; transform: translateX(-50%) translateY(0); }
     }
 
@@ -1351,32 +1287,30 @@
 
   <!-- ══ HERO VIDEO SCRUB ══ -->
   <div id="hero-wrapper">
-    <div id="hero-pin">
+    <div id="hero-pin" style="position:relative;width:100%;height:100vh;overflow:hidden;background:#0a0a0a;">
       <video
         id="hero-video"
         src="Rings_Levitate_From_Holder.mp4"
-        poster="logo_still.png"
         muted
         playsinline
         preload="auto"
-        webkit-playsinline
-        x5-playsinline
-        style="width:100%;height:100%;object-fit:cover;"
+        style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"
       ></video>
 
-      <!-- Logo overlay — fades in at 80% scroll -->
-      <div id="hero-logo-overlay">
-        <img src="logo_still.png" alt="Was Boutique" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div style="display:none;flex-direction:column;align-items:center;gap:6px;">
-          <span style="font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,70px);font-weight:700;color:#fff;letter-spacing:0.06em;text-shadow:0 0 40px rgba(233,30,140,0.5);">WAS BOUTIQUE</span>
-        </div>
-        <p class="tagline">We Are Sisters</p>
+      <!-- Dark overlay -->
+      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.3) 0%,transparent 40%,rgba(0,0,0,0.8) 100%);pointer-events:none;"></div>
+
+      <!-- Logo overlay -->
+      <div id="hero-logo" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity 0.8s ease;">
+        <img src="logo_still.png" alt="Was Boutique" style="width:clamp(220px,30vw,380px);filter:drop-shadow(0 0 40px rgba(233,30,140,0.6));" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+        <div style="display:none;font-family:Playfair Display,serif;font-size:clamp(36px,5vw,70px);font-weight:700;color:#fff;letter-spacing:0.06em;">WAS BOUTIQUE</div>
+        <p style="margin-top:18px;font-family:Montserrat,sans-serif;font-size:11px;font-weight:500;letter-spacing:0.45em;text-transform:uppercase;color:#e0c26a;">We Are Sisters</p>
       </div>
 
       <!-- Scroll indicator -->
-      <div id="scroll-indicator">
-        <span>Scroll to Reveal</span>
-        <div class="scroll-line"></div>
+      <div id="scroll-hint" style="position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;opacity:1;transition:opacity 0.4s;">
+        <span style="font-family:Montserrat,sans-serif;font-size:9px;font-weight:600;letter-spacing:0.35em;text-transform:uppercase;color:rgba(255,255,255,0.6);">Scroll</span>
+        <div style="width:1px;height:48px;background:linear-gradient(to bottom,rgba(255,255,255,0.5),transparent);"></div>
       </div>
     </div>
   </div>
@@ -1902,84 +1836,59 @@
       document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
     });
 
-    /* ── HERO VIDEO SCRUB ── */
+    /* ── SIMPLE VIDEO SCRUB ── */
     const video = document.getElementById('hero-video');
-    const heroPinEl = document.getElementById('hero-pin');
-    const heroLogoOverlay = document.getElementById('hero-logo-overlay');
-    const scrollIndicator = document.getElementById('scroll-indicator');
+    const heroLogo = document.getElementById('hero-logo');
+    const scrollHint = document.getElementById('scroll-hint');
     let videoDuration = 0;
-    let isVideoReady = false;
 
-    // Ensure video is properly loaded
-    function prepareVideo() {
-      if (video.readyState >= 2) {
-        videoDuration = video.duration;
-        isVideoReady = true;
-        initScrub();
-      }
-    }
+    // Wait for video to be ready
+    video.addEventListener('loadeddata', function() {
+      videoDuration = video.duration;
+      console.log('Video ready, duration:', videoDuration);
+    });
 
-    video.addEventListener('loadeddata', prepareVideo);
-    video.addEventListener('loadedmetadata', prepareVideo);
-
-    // Force load attempt
+    // If already loaded
     if (video.readyState >= 2) {
-      prepareVideo();
-    } else {
-      video.load();
+      videoDuration = video.duration;
     }
 
-    function initScrub() {
-      if (!isVideoReady || !videoDuration) return;
+    // Simple scroll-driven animation using GSAP ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
 
-      // Use a more robust approach with requestAnimationFrame for smoother updates
-      let rafId = null;
-      let targetTime = 0;
-
-      const scrubTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: '#hero-wrapper',
-          start: 'top top',
-          end: '+=300%',  // Increased scroll distance for smoother feel
-          scrub: 0.5,    // Slightly faster response
-          pin: '#hero-pin',
-          anticipatePin: 1,
-          onUpdate: (self) => {
-            // Calculate target time
-            targetTime = self.progress * videoDuration;
-
-            // Use RAF for smoother video updates
-            if (rafId) cancelAnimationFrame(rafId);
-            rafId = requestAnimationFrame(() => {
-              if (Math.abs(video.currentTime - targetTime) > 0.1) {
-                video.currentTime = targetTime;
-              }
-            });
-
-            // Fade out scroll indicator early
-            if (self.progress > 0.05) {
-              gsap.to(scrollIndicator, { opacity: 0, duration: 0.3 });
-            } else {
-              gsap.to(scrollIndicator, { opacity: 1, duration: 0.3 });
-            }
-
-            // Fade in logo at 70% progress (earlier for better visibility)
-            const logoOpacity = Math.max(0, (self.progress - 0.7) / 0.3);
-            gsap.set(heroLogoOverlay, { opacity: logoOpacity });
-          },
-          onLeave: () => {
-            // Ensure video ends at correct frame when leaving
-            video.currentTime = videoDuration - 0.1;
+    // Create a timeline that pins the hero and scrubs video
+    let scrollTriggerInstance = ScrollTrigger.create({
+      trigger: '#hero-wrapper',
+      start: 'top top',
+      end: '+=150%',  // 150% of viewport height
+      pin: '#hero-pin',
+      scrub: true,    // Smooth scrubbing
+      onUpdate: function(self) {
+        // Update video time based on scroll progress
+        if (videoDuration > 0) {
+          const targetTime = self.progress * videoDuration;
+          // Only update if difference is significant (prevents jitter)
+          if (Math.abs(video.currentTime - targetTime) > 0.05) {
+            video.currentTime = targetTime;
           }
         }
-      });
 
-      // Smoother Ken-Burns effect
-      scrubTl.fromTo(video, 
-        { scale: 1.08, filter: 'brightness(0.9)' }, 
-        { scale: 1.0, filter: 'brightness(1)', ease: 'power2.out' }
-      );
-    }
+        // Fade out scroll hint after 5% progress
+        if (self.progress > 0.05) {
+          scrollHint.style.opacity = '0';
+        } else {
+          scrollHint.style.opacity = '1';
+        }
+
+        // Fade in logo at 60% progress
+        if (self.progress > 0.6) {
+          const logoProgress = (self.progress - 0.6) / 0.4;
+          heroLogo.style.opacity = Math.min(1, logoProgress);
+        } else {
+          heroLogo.style.opacity = '0';
+        }
+      }
+    });
 
     /* ── REVEAL ON SCROLL ── */
     const revealEls = document.querySelectorAll('.reveal');
