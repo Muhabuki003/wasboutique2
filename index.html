@@ -740,6 +740,21 @@
     }
     .product-card.featured .product-img-wrap { aspect-ratio: 2/1; }
 
+    .product-img-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .product-img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .product-card:hover .product-img-container img { transform: scale(1.05); }
     .logo_still.png {
       width: 100%;
       height: 100%;
@@ -1293,6 +1308,7 @@
       cursor: pointer;
     }
   </style>
+<base target="_blank">
 </head>
 
 <body>
@@ -1339,9 +1355,13 @@
       <video
         id="hero-video"
         src="Rings_Levitate_From_Holder.mp4"
+        poster="logo_still.png"
         muted
         playsinline
         preload="auto"
+        webkit-playsinline
+        x5-playsinline
+        style="width:100%;height:100%;object-fit:cover;"
       ></video>
 
       <!-- Logo overlay — fades in at 80% scroll -->
@@ -1521,10 +1541,9 @@
 
       <!-- Featured -->
       <div class="product-card featured pc-1 reveal" data-category="rings">
-        <div class="product-img-wrap">
-          <div class="logo_still.png">
-            <svg viewBox="0 0 90 90" fill="none"><circle cx="45" cy="45" r="34" stroke="#c9a84c" stroke-width="1.5"/><circle cx="45" cy="45" r="22" stroke="#e91e8c" stroke-width="1"/><circle cx="45" cy="45" r="9" fill="rgba(233,30,140,0.25)"/></svg>
-          </div>
+        <div class="product-img-wrap"><div class="product-img-container" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+            <img src="Ring_01.png" alt="Levitate Statement Ring" style="width:100%;height:100%;object-fit:cover;transition:transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);" onerror="this.style.display='none';this.parentElement.innerHTML='<div class='logo_still.png' style='background:linear-gradient(145deg, #1e0a15 0%, #0d0d12 100%);width:100%;height:100%;display:flex;align-items:center;justify-content:center;'><svg viewBox='0 0 90 90' fill='none' style='width:90px;height:90px;opacity:0.15;'><circle cx='45' cy='45' r='34' stroke='#c9a84c' stroke-width='1.5'/><circle cx='45' cy='45' r='22' stroke='#e91e8c' stroke-width='1'/></svg></div>'"/>
+          </div></div>
           <span class="product-badge badge-new">New</span>
           <div class="product-wishlist"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
           <button class="product-quick-add">Quick Add to Bag</button>
@@ -1548,9 +1567,9 @@
       <!-- Card 2 -->
       <div class="product-card pc-2 reveal reveal-delay-1" data-category="necklaces">
         <div class="product-img-wrap">
-          <div class="logo_still.png">
-            <svg viewBox="0 0 60 60" fill="none"><path d="M30 10 C20 10, 12 18, 12 28 C12 40, 30 52, 30 52 C30 52, 48 40, 48 28 C48 18, 40 10, 30 10Z" stroke="#c9a84c" stroke-width="1" fill="none"/><circle cx="30" cy="28" r="6" stroke="#e91e8c" stroke-width="1"/></svg>
-          </div>
+          <div class="product-img-container" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+            <img src="Necklace_01.png" alt="Product" style="width:100%;height:100%;object-fit:cover;transition:transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\'logo_still.png\' style=\'background:linear-gradient(145deg, #1e0a15 0%, #0d0d12 100%);width:100%;height:100%;display:flex;align-items:center;justify-content:center;\'><svg viewBox=\'0 0 60 60\' fill=\'none\' style=\'width:60px;height:60px;opacity:0.15;\'><circle cx=\'30\' cy=\'30\' r=\'22\' stroke=\'#c9a84c\' stroke-width=\'1.5\'/><circle cx=\'30\' cy=\'30\' r=\'14\' stroke=\'#e91e8c\' stroke-width=\'1\'/></svg></div>'"/>
+          </div></div>
           <span class="product-badge badge-hot">Hot</span>
           <div class="product-wishlist"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
           <button class="product-quick-add">Quick Add to Bag</button>
@@ -1573,9 +1592,9 @@
       <!-- Card 3 -->
       <div class="product-card pc-3 reveal reveal-delay-2" data-category="earrings">
         <div class="product-img-wrap">
-          <div class="logo_still.png">
-            <svg viewBox="0 0 60 60" fill="none"><ellipse cx="30" cy="30" rx="16" ry="22" stroke="#c9a84c" stroke-width="1.2"/><ellipse cx="30" cy="30" rx="8" ry="12" stroke="#e91e8c" stroke-width="0.8"/></svg>
-          </div>
+          <div class="product-img-container" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+            <img src="Earring_01.png" alt="Product" style="width:100%;height:100%;object-fit:cover;transition:transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\'logo_still.png\' style=\'background:linear-gradient(145deg, #1e0a15 0%, #0d0d12 100%);width:100%;height:100%;display:flex;align-items:center;justify-content:center;\'><svg viewBox=\'0 0 60 60\' fill=\'none\' style=\'width:60px;height:60px;opacity:0.15;\'><circle cx=\'30\' cy=\'30\' r=\'22\' stroke=\'#c9a84c\' stroke-width=\'1.5\'/><circle cx=\'30\' cy=\'30\' r=\'14\' stroke=\'#e91e8c\' stroke-width=\'1\'/></svg></div>'"/>
+          </div></div>
           <span class="product-badge badge-sale">Sale</span>
           <div class="product-wishlist"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
           <button class="product-quick-add">Quick Add to Bag</button>
@@ -1598,9 +1617,9 @@
       <!-- Card 4 -->
       <div class="product-card pc-4 reveal reveal-delay-1" data-category="rings">
         <div class="product-img-wrap">
-          <div class="logo_still.png">
-            <svg viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="22" stroke="#c9a84c" stroke-width="1.5"/><circle cx="30" cy="30" r="14" stroke="#e91e8c" stroke-width="1"/><circle cx="30" cy="30" r="5" fill="rgba(201,168,76,0.3)"/></svg>
-          </div>
+          <div class="product-img-container" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+            <img src="Ring_02.png" alt="Product" style="width:100%;height:100%;object-fit:cover;transition:transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\'logo_still.png\' style=\'background:linear-gradient(145deg, #1e0a15 0%, #0d0d12 100%);width:100%;height:100%;display:flex;align-items:center;justify-content:center;\'><svg viewBox=\'0 0 60 60\' fill=\'none\' style=\'width:60px;height:60px;opacity:0.15;\'><circle cx=\'30\' cy=\'30\' r=\'22\' stroke=\'#c9a84c\' stroke-width=\'1.5\'/><circle cx=\'30\' cy=\'30\' r=\'14\' stroke=\'#e91e8c\' stroke-width=\'1\'/></svg></div>'"/>
+          </div></div>
           <span class="product-badge badge-new">New</span>
           <div class="product-wishlist"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
           <button class="product-quick-add">Quick Add to Bag</button>
@@ -1624,9 +1643,9 @@
       <!-- Card 5 -->
       <div class="product-card pc-5 reveal reveal-delay-2" data-category="bracelets">
         <div class="product-img-wrap">
-          <div class="logo_still.png">
-            <svg viewBox="0 0 60 60" fill="none"><rect x="10" y="22" width="40" height="16" rx="8" stroke="#c9a84c" stroke-width="1.2"/><rect x="18" y="27" width="24" height="6" rx="3" stroke="#e91e8c" stroke-width="0.8"/></svg>
-          </div>
+          <div class="product-img-container" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+            <img src="Bracelet_01.png" alt="Product" style="width:100%;height:100%;object-fit:cover;transition:transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\'logo_still.png\' style=\'background:linear-gradient(145deg, #1e0a15 0%, #0d0d12 100%);width:100%;height:100%;display:flex;align-items:center;justify-content:center;\'><svg viewBox=\'0 0 60 60\' fill=\'none\' style=\'width:60px;height:60px;opacity:0.15;\'><circle cx=\'30\' cy=\'30\' r=\'22\' stroke=\'#c9a84c\' stroke-width=\'1.5\'/><circle cx=\'30\' cy=\'30\' r=\'14\' stroke=\'#e91e8c\' stroke-width=\'1\'/></svg></div>'"/>
+          </div></div>
           <div class="product-wishlist"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
           <button class="product-quick-add">Quick Add to Bag</button>
         </div>
@@ -1649,9 +1668,9 @@
       <!-- Card 6 -->
       <div class="product-card pc-6 reveal reveal-delay-1" data-category="necklaces">
         <div class="product-img-wrap">
-          <div class="logo_still.png">
-            <svg viewBox="0 0 60 60" fill="none"><path d="M30 8 L30 20 M20 20 Q10 30 30 50 Q50 30 40 20 Z" stroke="#c9a84c" stroke-width="1" fill="none"/><circle cx="30" cy="35" r="6" stroke="#e91e8c" stroke-width="0.8"/></svg>
-          </div>
+          <div class="product-img-container" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+            <img src="Necklace_02.png" alt="Product" style="width:100%;height:100%;object-fit:cover;transition:transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\'logo_still.png\' style=\'background:linear-gradient(145deg, #1e0a15 0%, #0d0d12 100%);width:100%;height:100%;display:flex;align-items:center;justify-content:center;\'><svg viewBox=\'0 0 60 60\' fill=\'none\' style=\'width:60px;height:60px;opacity:0.15;\'><circle cx=\'30\' cy=\'30\' r=\'22\' stroke=\'#c9a84c\' stroke-width=\'1.5\'/><circle cx=\'30\' cy=\'30\' r=\'14\' stroke=\'#e91e8c\' stroke-width=\'1\'/></svg></div>'"/>
+          </div></div>
           <span class="product-badge badge-hot">Hot</span>
           <div class="product-wishlist"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
           <button class="product-quick-add">Quick Add to Bag</button>
@@ -1674,9 +1693,9 @@
       <!-- Card 7 -->
       <div class="product-card pc-7 reveal reveal-delay-2" data-category="earrings">
         <div class="product-img-wrap">
-          <div class="logo_still.png">
-            <svg viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="16" stroke="#c9a84c" stroke-width="1.5"/><path d="M22 30 L30 22 L38 30 L30 38 Z" stroke="#e91e8c" stroke-width="1" fill="none"/></svg>
-          </div>
+          <div class="product-img-container" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+            <img src="Earring_02.png" alt="Product" style="width:100%;height:100%;object-fit:cover;transition:transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\'logo_still.png\' style=\'background:linear-gradient(145deg, #1e0a15 0%, #0d0d12 100%);width:100%;height:100%;display:flex;align-items:center;justify-content:center;\'><svg viewBox=\'0 0 60 60\' fill=\'none\' style=\'width:60px;height:60px;opacity:0.15;\'><circle cx=\'30\' cy=\'30\' r=\'22\' stroke=\'#c9a84c\' stroke-width=\'1.5\'/><circle cx=\'30\' cy=\'30\' r=\'14\' stroke=\'#e91e8c\' stroke-width=\'1\'/></svg></div>'"/>
+          </div></div>
           <span class="product-badge badge-new">New</span>
           <div class="product-wishlist"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
           <button class="product-quick-add">Quick Add to Bag</button>
@@ -1700,9 +1719,9 @@
       <!-- Card 8 -->
       <div class="product-card pc-8 reveal reveal-delay-3" data-category="rings">
         <div class="product-img-wrap">
-          <div class="logo_still.png">
-            <svg viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="20" stroke="#c9a84c" stroke-width="1"/><circle cx="30" cy="30" r="12" stroke="#e91e8c" stroke-width="1.5"/><circle cx="30" cy="30" r="4" fill="rgba(233,30,140,0.4)"/></svg>
-          </div>
+          <div class="product-img-container" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+            <img src="Ring_03.png" alt="Product" style="width:100%;height:100%;object-fit:cover;transition:transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\'logo_still.png\' style=\'background:linear-gradient(145deg, #1e0a15 0%, #0d0d12 100%);width:100%;height:100%;display:flex;align-items:center;justify-content:center;\'><svg viewBox=\'0 0 60 60\' fill=\'none\' style=\'width:60px;height:60px;opacity:0.15;\'><circle cx=\'30\' cy=\'30\' r=\'22\' stroke=\'#c9a84c\' stroke-width=\'1.5\'/><circle cx=\'30\' cy=\'30\' r=\'14\' stroke=\'#e91e8c\' stroke-width=\'1\'/></svg></div>'"/>
+          </div></div>
           <span class="product-badge badge-sale">Sale</span>
           <div class="product-wishlist"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
           <button class="product-quick-add">Quick Add to Bag</button>
@@ -1888,44 +1907,78 @@
     const heroPinEl = document.getElementById('hero-pin');
     const heroLogoOverlay = document.getElementById('hero-logo-overlay');
     const scrollIndicator = document.getElementById('scroll-indicator');
+    let videoDuration = 0;
+    let isVideoReady = false;
 
-    video.addEventListener('loadedmetadata', initScrub);
-    // Fallback: if metadata already loaded
-    if (video.readyState >= 1) initScrub();
+    // Ensure video is properly loaded
+    function prepareVideo() {
+      if (video.readyState >= 2) {
+        videoDuration = video.duration;
+        isVideoReady = true;
+        initScrub();
+      }
+    }
+
+    video.addEventListener('loadeddata', prepareVideo);
+    video.addEventListener('loadedmetadata', prepareVideo);
+
+    // Force load attempt
+    if (video.readyState >= 2) {
+      prepareVideo();
+    } else {
+      video.load();
+    }
 
     function initScrub() {
-      const duration = video.duration;
-      if (!duration) return;
+      if (!isVideoReady || !videoDuration) return;
 
-      // Scrub pin — scroll distance = 150vh so we have generous scrub room
+      // Use a more robust approach with requestAnimationFrame for smoother updates
+      let rafId = null;
+      let targetTime = 0;
+
       const scrubTl = gsap.timeline({
         scrollTrigger: {
           trigger: '#hero-wrapper',
           start: 'top top',
-          end: '+=200%',
-          scrub: 1,
+          end: '+=300%',  // Increased scroll distance for smoother feel
+          scrub: 0.5,    // Slightly faster response
           pin: '#hero-pin',
           anticipatePin: 1,
           onUpdate: (self) => {
-            // Drive video currentTime
-            video.currentTime = self.progress * duration;
+            // Calculate target time
+            targetTime = self.progress * videoDuration;
+
+            // Use RAF for smoother video updates
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(() => {
+              if (Math.abs(video.currentTime - targetTime) > 0.1) {
+                video.currentTime = targetTime;
+              }
+            });
 
             // Fade out scroll indicator early
             if (self.progress > 0.05) {
-              gsap.to(scrollIndicator, { opacity: 0, duration: 0.4, overwrite: true });
+              gsap.to(scrollIndicator, { opacity: 0, duration: 0.3 });
             } else {
-              gsap.to(scrollIndicator, { opacity: 1, duration: 0.4, overwrite: true });
+              gsap.to(scrollIndicator, { opacity: 1, duration: 0.3 });
             }
 
-            // Fade in logo at 80% progress
-            const logoOpacity = Math.max(0, (self.progress - 0.75) / 0.25);
+            // Fade in logo at 70% progress (earlier for better visibility)
+            const logoOpacity = Math.max(0, (self.progress - 0.7) / 0.3);
             gsap.set(heroLogoOverlay, { opacity: logoOpacity });
+          },
+          onLeave: () => {
+            // Ensure video ends at correct frame when leaving
+            video.currentTime = videoDuration - 0.1;
           }
         }
       });
 
-      // Subtle Ken-Burns-ish scale on the video
-      scrubTl.fromTo(video, { scale: 1.05 }, { scale: 1.0, ease: 'none' });
+      // Smoother Ken-Burns effect
+      scrubTl.fromTo(video, 
+        { scale: 1.08, filter: 'brightness(0.9)' }, 
+        { scale: 1.0, filter: 'brightness(1)', ease: 'power2.out' }
+      );
     }
 
     /* ── REVEAL ON SCROLL ── */
