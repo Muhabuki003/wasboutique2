@@ -1,0 +1,1974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Was Boutique — We Are Sisters</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    :root {
+      --black:      #0a0a0a;
+      --black-soft: #111111;
+      --black-card: #161616;
+      --pink:       #e91e8c;
+      --pink-light: #f06ab1;
+      --pink-dark:  #b8156e;
+      --gold:       #c9a84c;
+      --gold-light: #e0c26a;
+      --gold-dim:   #8a6e2f;
+      --white:      #fafafa;
+      --off-white:  #f0ece6;
+      --gray-mid:   #888888;
+      --gray-light: #c8c8c8;
+      --font-display: 'Playfair Display', 'Georgia', serif;
+      --font-body:    'Cormorant Garamond', 'Georgia', serif;
+      --font-sans:    'Montserrat', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: auto; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 18px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--pink); border-radius: 2px; }
+
+    /* ══════════════════════════════════════
+       NAV
+    ══════════════════════════════════════ */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 48px;
+      background: transparent;
+      transition: background 0.5s ease, backdrop-filter 0.5s ease, padding 0.4s ease;
+    }
+    #nav.scrolled {
+      background: rgba(10,10,10,0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 14px 48px;
+      border-bottom: 1px solid rgba(201,168,76,0.18);
+    }
+    .nav-logo img {
+      height: 44px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 8px rgba(233,30,140,0.35));
+      transition: filter 0.3s;
+    }
+    .nav-logo img:hover { filter: drop-shadow(0 0 14px rgba(233,30,140,0.7)); }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      position: relative;
+      padding-bottom: 3px;
+      transition: color 0.3s;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: var(--pink);
+      transition: width 0.35s ease;
+    }
+    .nav-links a:hover { color: var(--pink-light); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .nav-icon {
+      width: 20px; height: 20px;
+      stroke: var(--white);
+      fill: none;
+      stroke-width: 1.5;
+      cursor: pointer;
+      transition: stroke 0.3s;
+    }
+    .nav-icon:hover { stroke: var(--pink); }
+    .nav-cart-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--pink);
+      color: #fff;
+      border: none;
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 10px 22px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .nav-cart-btn:hover { background: var(--pink-dark); transform: translateY(-1px); }
+
+    /* ══════════════════════════════════════
+       HERO — VIDEO SCRUB
+    ══════════════════════════════════════ */
+    #hero-wrapper {
+      position: relative;
+    }
+    #hero-pin {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--black);
+    }
+    #hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    /* Dark gradient overlay for depth */
+    #hero-pin::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at center 60%, transparent 30%, rgba(0,0,0,0.55) 100%),
+        linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 40%, rgba(0,0,0,0.7) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Pink/gold atmospheric glow */
+    #hero-pin::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 45%;
+      background: linear-gradient(to top, rgba(10,10,10,1) 0%, rgba(10,10,10,0.6) 50%, transparent 100%);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* Logo overlay */
+    #hero-logo-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+      opacity: 0;
+      pointer-events: none;
+    }
+    #hero-logo-overlay img {
+      width: clamp(220px, 30vw, 380px);
+      filter: drop-shadow(0 0 40px rgba(233,30,140,0.6)) drop-shadow(0 0 80px rgba(201,168,76,0.3));
+    }
+    #hero-logo-overlay .tagline {
+      margin-top: 18px;
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      text-shadow: 0 0 20px rgba(201,168,76,0.8);
+    }
+
+    /* Scroll indicator */
+    #scroll-indicator {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      animation: fadeInUp 1.2s ease 1.5s both;
+    }
+    #scroll-indicator span {
+      font-family: var(--font-sans);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+    }
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(0.8); }
+      50% { opacity: 1; transform: scaleY(1); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateX(-50%) translateY(16px); }
+      to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+
+    /* ══════════════════════════════════════
+       MARQUEE BAND
+    ══════════════════════════════════════ */
+    .marquee-band {
+      overflow: hidden;
+      background: var(--pink);
+      padding: 14px 0;
+      position: relative;
+      z-index: 10;
+    }
+    .marquee-track {
+      display: flex;
+      gap: 0;
+      animation: marqueeScroll 28s linear infinite;
+      white-space: nowrap;
+    }
+    .marquee-track span {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #fff;
+      padding: 0 40px;
+    }
+    .marquee-track .dot {
+      color: rgba(255,255,255,0.5);
+      padding: 0;
+      letter-spacing: 0;
+    }
+    @keyframes marqueeScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ══════════════════════════════════════
+       SECTION COMMONS
+    ══════════════════════════════════════ */
+    section {
+      position: relative;
+    }
+    .section-label {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--pink);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--pink);
+    }
+    .section-heading {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--white);
+    }
+    .section-heading em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    /* ══════════════════════════════════════
+       FEATURED / INTRO STRIP
+    ══════════════════════════════════════ */
+    #intro {
+      padding: 100px 48px 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .intro-text .section-label { margin-bottom: 28px; }
+    .intro-text .section-heading { margin-bottom: 24px; }
+    .intro-text p {
+      font-family: var(--font-body);
+      font-size: 19px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--gray-light);
+      max-width: 460px;
+    }
+    .intro-text .cta-row {
+      margin-top: 40px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--pink);
+      color: #fff;
+      border: none;
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 16px 36px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .btn-primary:hover { background: var(--pink-dark); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(233,30,140,0.4); }
+    .btn-primary:hover::after { opacity: 1; }
+    .btn-secondary {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: gap 0.3s, color 0.3s;
+    }
+    .btn-secondary:hover { gap: 14px; color: var(--gold); }
+    .btn-secondary::after { content: '→'; }
+
+    .intro-visual {
+      position: relative;
+    }
+    .intro-visual-frame {
+      aspect-ratio: 4/5;
+      background: var(--black-card);
+      border: 1px solid rgba(201,168,76,0.15);
+      overflow: hidden;
+      position: relative;
+    }
+    .intro-visual-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .intro-visual-frame .placeholder-img {
+      width: 100%;
+      height: 100%;
+      background:
+        linear-gradient(135deg, #1a0a12 0%, #0d0d0d 50%, #0a100a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .intro-visual-frame .placeholder-img svg {
+      width: 80px; height: 80px;
+      opacity: 0.15;
+    }
+    .intro-stat-badge {
+      position: absolute;
+      bottom: -24px;
+      left: -24px;
+      background: var(--gold);
+      padding: 20px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .intro-stat-badge .num {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--black);
+      line-height: 1;
+    }
+    .intro-stat-badge .lbl {
+      font-family: var(--font-sans);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(10,10,10,0.7);
+    }
+    /* gold accent line on intro visual */
+    .intro-visual::before {
+      content: '';
+      position: absolute;
+      top: -16px; right: -16px;
+      width: 120px; height: 120px;
+      border-top: 2px solid var(--gold);
+      border-right: 2px solid var(--gold);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* ══════════════════════════════════════
+       CATEGORY STRIP
+    ══════════════════════════════════════ */
+    #categories {
+      padding: 60px 48px 80px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .categories-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 48px;
+    }
+    .categories-header .section-heading { margin-top: 12px; }
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .cat-card {
+      position: relative;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--black-card);
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .cat-card:first-child { grid-row: span 2; aspect-ratio: auto; }
+    .cat-card .cat-bg {
+      position: absolute;
+      inset: 0;
+      transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .cat-card:hover .cat-bg { transform: scale(1.06); }
+    .cat-card .cat-bg-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .cat-card .cat-bg-placeholder {
+      width: 100%;
+      height: 100%;
+    }
+    /* Category placeholder gradients */
+    .cat-card:nth-child(1) .cat-bg-placeholder { background: linear-gradient(160deg, #1f0a18 0%, #0d0d0d 100%); }
+    .cat-card:nth-child(2) .cat-bg-placeholder { background: linear-gradient(160deg, #0d1420 0%, #0a0a0a 100%); }
+    .cat-card:nth-child(3) .cat-bg-placeholder { background: linear-gradient(160deg, #1a1204 0%, #0a0a0a 100%); }
+    .cat-card:nth-child(4) .cat-bg-placeholder { background: linear-gradient(160deg, #0d1a12 0%, #0a0a0a 100%); }
+    .cat-card:nth-child(5) .cat-bg-placeholder { background: linear-gradient(160deg, #1a0a1a 0%, #0a0a0a 100%); }
+
+    .cat-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%);
+      z-index: 1;
+    }
+    .cat-card .cat-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 24px 22px;
+      z-index: 2;
+      transform: translateY(8px);
+      transition: transform 0.4s ease;
+    }
+    .cat-card:hover .cat-info { transform: translateY(0); }
+    .cat-card .cat-name {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--white);
+    }
+    .cat-card .cat-count {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--pink-light);
+      margin-top: 4px;
+      opacity: 0;
+      transition: opacity 0.4s ease 0.1s;
+    }
+    .cat-card:hover .cat-count { opacity: 1; }
+    /* pink accent corner on first card */
+    .cat-card:first-child::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 60px;
+      background: var(--pink);
+      z-index: 3;
+    }
+    /* decorative ring icon inside large card */
+    .cat-card:first-child .cat-deco {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);
+      z-index: 1;
+      opacity: 0.06;
+    }
+    .cat-card:first-child .cat-deco svg { width: 200px; height: 200px; }
+
+    /* ══════════════════════════════════════
+       FEATURED PRODUCT PROMO
+    ══════════════════════════════════════ */
+    #promo {
+      margin: 20px 0;
+      background: var(--black-soft);
+      border-top: 1px solid rgba(201,168,76,0.12);
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+      padding: 80px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 100px;
+      max-width: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+    #promo::before {
+      content: 'WAS';
+      position: absolute;
+      font-family: var(--font-display);
+      font-size: 280px;
+      font-weight: 900;
+      color: rgba(255,255,255,0.02);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      letter-spacing: -0.05em;
+      white-space: nowrap;
+    }
+    .promo-text {
+      max-width: 440px;
+      z-index: 1;
+    }
+    .promo-text .section-label { margin-bottom: 20px; }
+    .promo-text .promo-heading {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 4.5vw, 68px);
+      font-weight: 400;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+    .promo-text .promo-heading span { color: var(--gold-light); font-style: italic; }
+    .promo-text p {
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--gray-light);
+      line-height: 1.75;
+      margin-bottom: 36px;
+    }
+    .promo-visual {
+      position: relative;
+      z-index: 1;
+      flex-shrink: 0;
+    }
+    .promo-ring-frame {
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: radial-gradient(circle at 40% 35%, rgba(233,30,140,0.1), transparent 65%),
+                  radial-gradient(circle at 65% 65%, rgba(201,168,76,0.08), transparent 60%);
+    }
+    .promo-ring-frame::before {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border-radius: 50%;
+      border: 1px dashed rgba(201,168,76,0.15);
+    }
+    .promo-ring-frame .promo-product-placeholder {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2a1520 0%, #1a1a1a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .promo-ring-frame .promo-product-placeholder svg {
+      width: 100px; height: 100px;
+      opacity: 0.3;
+    }
+    /* floating price tag */
+    .promo-price-tag {
+      position: absolute;
+      right: -20px;
+      bottom: 40px;
+      background: var(--pink);
+      padding: 14px 20px;
+      text-align: center;
+    }
+    .promo-price-tag .from {
+      font-family: var(--font-sans);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+    }
+    .promo-price-tag .price {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    /* ══════════════════════════════════════
+       SHOP / PRODUCTS
+    ══════════════════════════════════════ */
+    #shop {
+      padding: 100px 48px 120px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .shop-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .shop-header-left .section-label { margin-bottom: 12px; }
+    .shop-filters {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 48px;
+    }
+    .filter-btn {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 10px 22px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: transparent;
+      color: var(--gray-light);
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      border-color: var(--pink);
+      color: var(--pink);
+      background: rgba(233,30,140,0.07);
+    }
+    .filter-btn.active {
+      background: var(--pink);
+      color: #fff;
+      border-color: var(--pink);
+    }
+
+    /* Product grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 28px;
+    }
+    /* Featured card — spans 2 cols */
+    .product-card.featured { grid-column: span 2; }
+
+    .product-card {
+      background: var(--black-card);
+      border: 1px solid rgba(255,255,255,0.05);
+      cursor: pointer;
+      position: relative;
+      group: '';
+      transition: border-color 0.35s;
+    }
+    .product-card:hover { border-color: rgba(233,30,140,0.35); }
+
+    .product-img-wrap {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 1/1;
+      background: var(--black-soft);
+    }
+    .product-card.featured .product-img-wrap { aspect-ratio: 2/1; }
+
+    .product-img-bg {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .product-card:hover .product-img-bg { transform: scale(1.05); }
+
+    /* Unique gradient per card */
+    .pc-1 .product-img-bg { background: linear-gradient(145deg, #1e0a15 0%, #0d0d12 100%); }
+    .pc-2 .product-img-bg { background: linear-gradient(145deg, #100d1e 0%, #0d0d0d 100%); }
+    .pc-3 .product-img-bg { background: linear-gradient(145deg, #1a1204 0%, #0d0d0d 100%); }
+    .pc-4 .product-img-bg { background: linear-gradient(145deg, #0d1a12 0%, #0d0d0d 100%); }
+    .pc-5 .product-img-bg { background: linear-gradient(145deg, #1a0a1a 0%, #0d0d0d 100%); }
+    .pc-6 .product-img-bg { background: linear-gradient(145deg, #1a0f04 0%, #0d0d0d 100%); }
+    .pc-7 .product-img-bg { background: linear-gradient(145deg, #0a1a14 0%, #0d0d0d 100%); }
+    .pc-8 .product-img-bg { background: linear-gradient(145deg, #1a0a0d 0%, #0d0d0d 100%); }
+
+    .product-img-bg svg {
+      width: 60px; height: 60px;
+      opacity: 0.15;
+    }
+    .product-card.featured .product-img-bg svg { width: 90px; height: 90px; }
+
+    /* Badge */
+    .product-badge {
+      position: absolute;
+      top: 14px; left: 14px;
+      font-family: var(--font-sans);
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      z-index: 2;
+    }
+    .badge-new    { background: var(--pink);  color: #fff; }
+    .badge-sale   { background: var(--gold);  color: var(--black); }
+    .badge-hot    { background: var(--black); color: var(--pink); border: 1px solid var(--pink); }
+
+    /* Quick add */
+    .product-quick-add {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: var(--pink);
+      color: #fff;
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 13px;
+      transform: translateY(100%);
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      cursor: pointer;
+      border: none;
+      width: 100%;
+    }
+    .product-card:hover .product-quick-add { transform: translateY(0); }
+
+    /* Wishlist */
+    .product-wishlist {
+      position: absolute;
+      top: 14px; right: 14px;
+      width: 34px; height: 34px;
+      background: rgba(10,10,10,0.6);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.3s, border-color 0.3s;
+      z-index: 2;
+    }
+    .product-card:hover .product-wishlist { opacity: 1; }
+    .product-wishlist:hover { border-color: var(--pink); }
+    .product-wishlist svg { width: 14px; height: 14px; stroke: var(--white); fill: none; stroke-width: 1.5; }
+    .product-wishlist:hover svg { stroke: var(--pink); }
+
+    .product-info {
+      padding: 20px 20px 22px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .product-category {
+      font-family: var(--font-sans);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-bottom: 6px;
+    }
+    .product-name {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--white);
+      margin-bottom: 10px;
+      line-height: 1.25;
+    }
+    .product-price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .product-price {
+      font-family: var(--font-sans);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--gold-light);
+    }
+    .product-price .original {
+      color: var(--gray-mid);
+      text-decoration: line-through;
+      font-size: 12px;
+      font-weight: 400;
+      margin-left: 6px;
+    }
+    .product-stars {
+      display: flex;
+      gap: 2px;
+    }
+    .product-stars svg {
+      width: 11px; height: 11px;
+      fill: var(--gold);
+      stroke: none;
+    }
+
+    /* Load more */
+    .shop-load-more {
+      text-align: center;
+      margin-top: 60px;
+    }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--white);
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 16px 48px;
+      background: transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .btn-outline:hover {
+      border-color: var(--pink);
+      color: var(--pink);
+      background: rgba(233,30,140,0.05);
+    }
+
+    /* ══════════════════════════════════════
+       TESTIMONIAL STRIP
+    ══════════════════════════════════════ */
+    #testimonials {
+      padding: 80px 48px;
+      background: var(--black-soft);
+      border-top: 1px solid rgba(201,168,76,0.1);
+    }
+    .testimonials-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .testimonials-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    .testimonials-header .section-label {
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+    .testimonials-header .section-label::before { display: none; }
+    .testimonials-header .section-heading { font-size: clamp(30px, 3.5vw, 50px); }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .testimonial-card {
+      background: var(--black-card);
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 36px 32px;
+      position: relative;
+    }
+    .testimonial-card::before {
+      content: '"';
+      position: absolute;
+      top: 20px; right: 24px;
+      font-family: var(--font-display);
+      font-size: 80px;
+      line-height: 1;
+      color: rgba(233,30,140,0.12);
+      font-weight: 700;
+    }
+    .testimonial-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 18px;
+    }
+    .testimonial-stars svg { width: 14px; height: 14px; fill: var(--gold); stroke: none; }
+    .testimonial-text {
+      font-family: var(--font-body);
+      font-size: 17px;
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--gray-light);
+      margin-bottom: 24px;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .testimonial-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--pink-dark), var(--gold-dim));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .testimonial-name {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--white);
+      text-transform: uppercase;
+    }
+    .testimonial-loc {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      color: var(--gray-mid);
+      margin-top: 2px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ══════════════════════════════════════
+       EMAIL CAPTURE
+    ══════════════════════════════════════ */
+    #newsletter {
+      padding: 100px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #newsletter::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(233,30,140,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .newsletter-inner {
+      max-width: 620px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .newsletter-inner .section-label {
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+    .newsletter-inner .section-label::before { display: none; }
+    .newsletter-inner .section-heading { font-size: clamp(32px, 4vw, 54px); margin-bottom: 16px; }
+    .newsletter-inner p {
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--gray-light);
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+    .newsletter-form {
+      display: flex;
+      gap: 0;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .newsletter-form input {
+      flex: 1;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-right: none;
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 16px;
+      padding: 16px 20px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    .newsletter-form input::placeholder { color: var(--gray-mid); font-style: italic; }
+    .newsletter-form input:focus { border-color: var(--pink); }
+    .newsletter-form button {
+      background: var(--pink);
+      border: none;
+      color: #fff;
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 16px 28px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.3s;
+    }
+    .newsletter-form button:hover { background: var(--pink-dark); }
+    .newsletter-perks {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 24px;
+    }
+    .newsletter-perks span {
+      font-family: var(--font-sans);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray-mid);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .newsletter-perks span::before { content: '✦'; color: var(--gold); font-size: 8px; }
+
+    /* ══════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════ */
+    #footer {
+      background: var(--black-soft);
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 70px 48px 40px;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+    .footer-brand img {
+      height: 40px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 6px rgba(233,30,140,0.3));
+      margin-bottom: 20px;
+    }
+    .footer-brand p {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--gray-mid);
+      margin-bottom: 28px;
+      max-width: 300px;
+    }
+    .footer-socials {
+      display: flex;
+      gap: 12px;
+    }
+    .footer-social-icon {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(255,255,255,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .footer-social-icon:hover { border-color: var(--pink); background: rgba(233,30,140,0.1); }
+    .footer-social-icon svg { width: 14px; height: 14px; stroke: var(--gray-light); fill: none; stroke-width: 1.5; }
+    .footer-social-icon:hover svg { stroke: var(--pink); }
+
+    .footer-col h4 {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 22px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-col ul li a {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--gray-mid);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .footer-col ul li a:hover { color: var(--pink-light); }
+
+    .footer-bottom {
+      padding-top: 28px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-bottom p {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--gray-mid);
+    }
+    .footer-bottom p span { color: var(--pink); }
+    .footer-payment-icons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .pay-badge {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 5px 10px;
+      font-family: var(--font-sans);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--gray-light);
+    }
+
+    /* ══════════════════════════════════════
+       ANIMATIONS / REVEAL
+    ══════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.22s; }
+    .reveal-delay-3 { transition-delay: 0.36s; }
+    .reveal-delay-4 { transition-delay: 0.5s; }
+
+    /* ══════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════ */
+    @media (max-width: 1100px) {
+      .product-grid { grid-template-columns: repeat(3, 1fr); }
+      .product-card.featured { grid-column: span 2; }
+      .categories-grid { grid-template-columns: repeat(3, 1fr); }
+      .cat-card:first-child { grid-column: span 2; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 860px) {
+      #nav { padding: 16px 24px; }
+      #nav.scrolled { padding: 12px 24px; }
+      .nav-links { display: none; }
+      #intro { grid-template-columns: 1fr; gap: 60px; padding: 80px 24px 60px; }
+      .intro-text p { max-width: 100%; }
+      #categories { padding: 40px 24px 60px; }
+      .categories-grid { grid-template-columns: repeat(2, 1fr); }
+      .cat-card:first-child { grid-column: span 2; }
+      #promo { flex-direction: column; gap: 50px; padding: 60px 24px; }
+      #shop { padding: 80px 24px 100px; }
+      .product-grid { grid-template-columns: repeat(2, 1fr); }
+      .product-card.featured { grid-column: span 2; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+      #newsletter { padding: 80px 24px; }
+      .newsletter-perks { flex-direction: column; align-items: center; gap: 12px; }
+    }
+    @media (max-width: 560px) {
+      .product-grid { grid-template-columns: 1fr 1fr; }
+      .product-card.featured { grid-column: span 2; }
+      .categories-grid { grid-template-columns: 1fr 1fr; }
+      .cat-card:first-child { grid-column: span 2; }
+      #promo::before { font-size: 140px; }
+      .footer-top { grid-template-columns: 1fr; }
+      .newsletter-form { flex-direction: column; }
+      .newsletter-form input { border-right: 1px solid rgba(255,255,255,0.12); border-bottom: none; }
+      .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+      .shop-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+      #footer { padding: 60px 24px 32px; }
+    }
+
+    /* Mobile hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px; height: 1.5px;
+      background: var(--white);
+      transition: all 0.3s;
+    }
+    @media (max-width: 860px) { .hamburger { display: flex; } }
+
+    /* Mobile menu */
+    #mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,10,10,0.97);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s;
+    }
+    #mobile-menu.open { opacity: 1; pointer-events: all; }
+    #mobile-menu a {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 400;
+      color: var(--white);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    #mobile-menu a:hover { color: var(--pink); }
+    #mobile-menu .close-btn {
+      position: absolute;
+      top: 24px; right: 24px;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 28px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══ NAV ══ -->
+  <nav id="nav">
+    <a href="#" class="nav-logo">
+      <img src="logo_still.png" alt="Was Boutique" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+      <span style="display:none;font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;letter-spacing:0.08em;">WAS <span style="color:#e91e8c;">BOUTIQUE</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#shop">Shop</a></li>
+      <li><a href="#categories">Collections</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <svg class="nav-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <button class="nav-cart-btn">
+        <svg style="width:14px;height:14px;stroke:#fff;fill:none;stroke-width:1.8" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        Bag (0)
+      </button>
+      <div class="hamburger" onclick="document.getElementById('mobile-menu').classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu">
+    <button class="close-btn" onclick="document.getElementById('mobile-menu').classList.remove('open')">✕</button>
+    <a href="#" onclick="document.getElementById('mobile-menu').classList.remove('open')">Home</a>
+    <a href="#shop" onclick="document.getElementById('mobile-menu').classList.remove('open')">Shop</a>
+    <a href="#categories" onclick="document.getElementById('mobile-menu').classList.remove('open')">Collections</a>
+    <a href="#" onclick="document.getElementById('mobile-menu').classList.remove('open')">About</a>
+    <a href="#" onclick="document.getElementById('mobile-menu').classList.remove('open')">Contact</a>
+  </div>
+
+  <!-- ══ HERO VIDEO SCRUB ══ -->
+  <div id="hero-wrapper">
+    <div id="hero-pin">
+      <video
+        id="hero-video"
+        src="Rings_Levitate_From_Holder.mp4"
+        muted
+        playsinline
+        preload="auto"
+      ></video>
+
+      <!-- Logo overlay — fades in at 80% scroll -->
+      <div id="hero-logo-overlay">
+        <img src="logo_still.png" alt="Was Boutique" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div style="display:none;flex-direction:column;align-items:center;gap:6px;">
+          <span style="font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,70px);font-weight:700;color:#fff;letter-spacing:0.06em;text-shadow:0 0 40px rgba(233,30,140,0.5);">WAS BOUTIQUE</span>
+        </div>
+        <p class="tagline">We Are Sisters</p>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div id="scroll-indicator">
+        <span>Scroll to Reveal</span>
+        <div class="scroll-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ MARQUEE ══ -->
+  <div class="marquee-band">
+    <div class="marquee-track">
+      <span>Free Shipping Over $75</span><span class="dot">✦</span>
+      <span>Handcrafted Jewelry</span><span class="dot">✦</span>
+      <span>We Are Sisters</span><span class="dot">✦</span>
+      <span>New Arrivals Weekly</span><span class="dot">✦</span>
+      <span>Rings · Necklaces · Bracelets · Earrings</span><span class="dot">✦</span>
+      <span>Free Shipping Over $75</span><span class="dot">✦</span>
+      <span>Handcrafted Jewelry</span><span class="dot">✦</span>
+      <span>We Are Sisters</span><span class="dot">✦</span>
+      <span>New Arrivals Weekly</span><span class="dot">✦</span>
+      <span>Rings · Necklaces · Bracelets · Earrings</span><span class="dot">✦</span>
+    </div>
+  </div>
+
+  <!-- ══ INTRO ══ -->
+  <section id="intro">
+    <div class="intro-text reveal">
+      <div class="section-label">Our Story</div>
+      <h2 class="section-heading">
+        Jewelry That<br/>
+        Speaks <em>Her</em> Language
+      </h2>
+      <p>
+        Was Boutique was born from a bond between sisters — a shared love for pieces that feel personal, intentional, and undeniably beautiful. Every ring, necklace, and bracelet is chosen to celebrate the woman wearing it.
+      </p>
+      <div class="cta-row">
+        <a href="#shop" class="btn-primary">Shop the Collection</a>
+        <a href="#" class="btn-secondary">Our Story</a>
+      </div>
+    </div>
+    <div class="intro-visual reveal reveal-delay-2">
+      <div class="intro-visual-frame">
+        <div class="placeholder-img">
+          <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="40" cy="40" r="28" stroke="#c9a84c" stroke-width="1.5"/>
+            <circle cx="40" cy="40" r="18" stroke="#e91e8c" stroke-width="1"/>
+            <circle cx="40" cy="40" r="8" fill="rgba(233,30,140,0.2)"/>
+          </svg>
+        </div>
+      </div>
+      <div class="intro-stat-badge">
+        <span class="num">500+</span>
+        <span class="lbl">Pieces Available</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CATEGORIES ══ -->
+  <section id="categories">
+    <div class="categories-header">
+      <div>
+        <div class="section-label">Browse By</div>
+        <h2 class="section-heading">Shop <em>Collections</em></h2>
+      </div>
+      <a href="#shop" class="btn-secondary">View All</a>
+    </div>
+
+    <div class="categories-grid">
+      <!-- Card 1 — tall featured -->
+      <div class="cat-card">
+        <div class="cat-bg">
+          <div class="cat-bg-placeholder"></div>
+        </div>
+        <div class="cat-deco">
+          <svg viewBox="0 0 200 200" fill="none">
+            <circle cx="100" cy="100" r="80" stroke="#c9a84c" stroke-width="1"/>
+            <circle cx="100" cy="100" r="55" stroke="#e91e8c" stroke-width="0.5"/>
+          </svg>
+        </div>
+        <div class="cat-info">
+          <div class="cat-name">Rings</div>
+          <div class="cat-count">142 Pieces</div>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="cat-card">
+        <div class="cat-bg"><div class="cat-bg-placeholder"></div></div>
+        <div class="cat-info">
+          <div class="cat-name">Necklaces</div>
+          <div class="cat-count">98 Pieces</div>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="cat-card">
+        <div class="cat-bg"><div class="cat-bg-placeholder"></div></div>
+        <div class="cat-info">
+          <div class="cat-name">Earrings</div>
+          <div class="cat-count">114 Pieces</div>
+        </div>
+      </div>
+      <!-- Card 4 -->
+      <div class="cat-card">
+        <div class="cat-bg"><div class="cat-bg-placeholder"></div></div>
+        <div class="cat-info">
+          <div class="cat-name">Bracelets</div>
+          <div class="cat-count">76 Pieces</div>
+        </div>
+      </div>
+      <!-- Card 5 -->
+      <div class="cat-card">
+        <div class="cat-bg"><div class="cat-bg-placeholder"></div></div>
+        <div class="cat-info">
+          <div class="cat-name">Sets</div>
+          <div class="cat-count">55 Pieces</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PROMO STRIP ══ -->
+  <section id="promo">
+    <div class="promo-text reveal">
+      <div class="section-label">Limited Drop</div>
+      <h2 class="promo-heading">The <span>Levitate</span><br/>Ring Collection</h2>
+      <p>Inspired by weightlessness. Crafted for the woman who moves through the world with effortless grace. Each piece is designed to turn heads and spark conversations.</p>
+      <a href="#shop" class="btn-primary">Shop Now — From $48</a>
+    </div>
+    <div class="promo-visual reveal reveal-delay-2">
+      <div class="promo-ring-frame">
+        <div class="promo-product-placeholder">
+          <svg viewBox="0 0 100 100" fill="none">
+            <circle cx="50" cy="50" r="38" stroke="#c9a84c" stroke-width="1.5"/>
+            <circle cx="50" cy="50" r="24" stroke="#e91e8c" stroke-width="1"/>
+            <circle cx="50" cy="50" r="10" fill="rgba(233,30,140,0.25)"/>
+          </svg>
+        </div>
+      </div>
+      <div class="promo-price-tag">
+        <div class="from">Starting at</div>
+        <div class="price">$48</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SHOP / PRODUCTS ══ -->
+  <section id="shop">
+    <div class="shop-header">
+      <div class="shop-header-left">
+        <div class="section-label">Our Collection</div>
+        <h2 class="section-heading">New <em>Arrivals</em></h2>
+      </div>
+      <a href="#" class="btn-secondary">All Products</a>
+    </div>
+
+    <!-- Filter tabs -->
+    <div class="shop-filters">
+      <button class="filter-btn active" onclick="filterProducts(this,'all')">All</button>
+      <button class="filter-btn" onclick="filterProducts(this,'rings')">Rings</button>
+      <button class="filter-btn" onclick="filterProducts(this,'necklaces')">Necklaces</button>
+      <button class="filter-btn" onclick="filterProducts(this,'earrings')">Earrings</button>
+      <button class="filter-btn" onclick="filterProducts(this,'bracelets')">Bracelets</button>
+    </div>
+
+    <!-- Product grid -->
+    <div class="product-grid" id="product-grid">
+
+      <!-- Featured -->
+      <div class="product-card featured pc-1 reveal" data-category="rings">
+        <div class="product-img-wrap">
+          <div class="product-img-bg">
+            <svg viewBox="0 0 90 90" fill="none"><circle cx="45" cy="45" r="34" stroke="#c9a84c" stroke-width="1.5"/><circle cx="45" cy="45" r="22" stroke="#e91e8c" stroke-width="1"/><circle cx="45" cy="45" r="9" fill="rgba(233,30,140,0.25)"/></svg>
+          </div>
+          <span class="product-badge badge-new">New</span>
+          <div class="product-wishlist"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <button class="product-quick-add">Quick Add to Bag</button>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Rings</div>
+          <div class="product-name">Levitate Statement Ring</div>
+          <div class="product-price-row">
+            <div class="product-price">$68 <span class="original">$95</span></div>
+            <div class="product-stars">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="product-card pc-2 reveal reveal-delay-1" data-category="necklaces">
+        <div class="product-img-wrap">
+          <div class="product-img-bg">
+            <svg viewBox="0 0 60 60" fill="none"><path d="M30 10 C20 10, 12 18, 12 28 C12 40, 30 52, 30 52 C30 52, 48 40, 48 28 C48 18, 40 10, 30 10Z" stroke="#c9a84c" stroke-width="1" fill="none"/><circle cx="30" cy="28" r="6" stroke="#e91e8c" stroke-width="1"/></svg>
+          </div>
+          <span class="product-badge badge-hot">Hot</span>
+          <div class="product-wishlist"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <button class="product-quick-add">Quick Add to Bag</button>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Necklaces</div>
+          <div class="product-name">Dainty Gold Pendant</div>
+          <div class="product-price-row">
+            <div class="product-price">$52</div>
+            <div class="product-stars">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="product-card pc-3 reveal reveal-delay-2" data-category="earrings">
+        <div class="product-img-wrap">
+          <div class="product-img-bg">
+            <svg viewBox="0 0 60 60" fill="none"><ellipse cx="30" cy="30" rx="16" ry="22" stroke="#c9a84c" stroke-width="1.2"/><ellipse cx="30" cy="30" rx="8" ry="12" stroke="#e91e8c" stroke-width="0.8"/></svg>
+          </div>
+          <span class="product-badge badge-sale">Sale</span>
+          <div class="product-wishlist"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <button class="product-quick-add">Quick Add to Bag</button>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Earrings</div>
+          <div class="product-name">Crystal Drop Hoops</div>
+          <div class="product-price-row">
+            <div class="product-price">$38 <span class="original">$55</span></div>
+            <div class="product-stars">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="product-card pc-4 reveal reveal-delay-1" data-category="rings">
+        <div class="product-img-wrap">
+          <div class="product-img-bg">
+            <svg viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="22" stroke="#c9a84c" stroke-width="1.5"/><circle cx="30" cy="30" r="14" stroke="#e91e8c" stroke-width="1"/><circle cx="30" cy="30" r="5" fill="rgba(201,168,76,0.3)"/></svg>
+          </div>
+          <span class="product-badge badge-new">New</span>
+          <div class="product-wishlist"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <button class="product-quick-add">Quick Add to Bag</button>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Rings</div>
+          <div class="product-name">Pink Sapphire Band</div>
+          <div class="product-price-row">
+            <div class="product-price">$84</div>
+            <div class="product-stars">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="product-card pc-5 reveal reveal-delay-2" data-category="bracelets">
+        <div class="product-img-wrap">
+          <div class="product-img-bg">
+            <svg viewBox="0 0 60 60" fill="none"><rect x="10" y="22" width="40" height="16" rx="8" stroke="#c9a84c" stroke-width="1.2"/><rect x="18" y="27" width="24" height="6" rx="3" stroke="#e91e8c" stroke-width="0.8"/></svg>
+          </div>
+          <div class="product-wishlist"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <button class="product-quick-add">Quick Add to Bag</button>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Bracelets</div>
+          <div class="product-name">Gold Tennis Bracelet</div>
+          <div class="product-price-row">
+            <div class="product-price">$120</div>
+            <div class="product-stars">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="product-card pc-6 reveal reveal-delay-1" data-category="necklaces">
+        <div class="product-img-wrap">
+          <div class="product-img-bg">
+            <svg viewBox="0 0 60 60" fill="none"><path d="M30 8 L30 20 M20 20 Q10 30 30 50 Q50 30 40 20 Z" stroke="#c9a84c" stroke-width="1" fill="none"/><circle cx="30" cy="35" r="6" stroke="#e91e8c" stroke-width="0.8"/></svg>
+          </div>
+          <span class="product-badge badge-hot">Hot</span>
+          <div class="product-wishlist"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <button class="product-quick-add">Quick Add to Bag</button>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Necklaces</div>
+          <div class="product-name">Layered Chain Set</div>
+          <div class="product-price-row">
+            <div class="product-price">$76</div>
+            <div class="product-stars">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 7 -->
+      <div class="product-card pc-7 reveal reveal-delay-2" data-category="earrings">
+        <div class="product-img-wrap">
+          <div class="product-img-bg">
+            <svg viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="16" stroke="#c9a84c" stroke-width="1.5"/><path d="M22 30 L30 22 L38 30 L30 38 Z" stroke="#e91e8c" stroke-width="1" fill="none"/></svg>
+          </div>
+          <span class="product-badge badge-new">New</span>
+          <div class="product-wishlist"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <button class="product-quick-add">Quick Add to Bag</button>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Earrings</div>
+          <div class="product-name">Geometric Studs</div>
+          <div class="product-price-row">
+            <div class="product-price">$44</div>
+            <div class="product-stars">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 8 -->
+      <div class="product-card pc-8 reveal reveal-delay-3" data-category="rings">
+        <div class="product-img-wrap">
+          <div class="product-img-bg">
+            <svg viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="20" stroke="#c9a84c" stroke-width="1"/><circle cx="30" cy="30" r="12" stroke="#e91e8c" stroke-width="1.5"/><circle cx="30" cy="30" r="4" fill="rgba(233,30,140,0.4)"/></svg>
+          </div>
+          <span class="product-badge badge-sale">Sale</span>
+          <div class="product-wishlist"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <button class="product-quick-add">Quick Add to Bag</button>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Rings</div>
+          <div class="product-name">Stackable Mini Set</div>
+          <div class="product-price-row">
+            <div class="product-price">$58 <span class="original">$78</span></div>
+            <div class="product-stars">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /product-grid -->
+
+    <div class="shop-load-more reveal">
+      <a href="#" class="btn-outline">Load More Products</a>
+    </div>
+  </section>
+
+  <!-- ══ TESTIMONIALS ══ -->
+  <section id="testimonials">
+    <div class="testimonials-inner">
+      <div class="testimonials-header reveal">
+        <div class="section-label">Reviews</div>
+        <h2 class="section-heading">What <em>Sisters</em> Are Saying</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card reveal">
+          <div class="testimonial-stars">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p class="testimonial-text">"Ordered the Levitate ring and it arrived exactly as pictured. The quality is insane for the price. I've gotten so many compliments — everyone asks where I got it."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">J</div>
+            <div>
+              <div class="testimonial-name">Jasmine R.</div>
+              <div class="testimonial-loc">Houston, TX</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal reveal-delay-1">
+          <div class="testimonial-stars">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p class="testimonial-text">"Was Boutique is everything I didn't know I needed. The pink sapphire band is my everyday piece now. Shipping was fast, packaging was gorgeous."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">M</div>
+            <div>
+              <div class="testimonial-name">Morgan T.</div>
+              <div class="testimonial-loc">Atlanta, GA</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal reveal-delay-2">
+          <div class="testimonial-stars">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p class="testimonial-text">"I bought the layered chain set for my sister's birthday. She cried. The craftsmanship, the box it came in — everything screams luxury. We're both obsessed."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">A</div>
+            <div>
+              <div class="testimonial-name">Alexis W.</div>
+              <div class="testimonial-loc">Dallas, TX</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ NEWSLETTER ══ -->
+  <section id="newsletter">
+    <div class="newsletter-inner reveal">
+      <div class="section-label">Join the Family</div>
+      <h2 class="section-heading">Get <em>First Access</em></h2>
+      <p>New drops, exclusive offers, and sister energy — straight to your inbox.</p>
+      <div class="newsletter-form">
+        <input type="email" placeholder="Your email address…" />
+        <button>Subscribe</button>
+      </div>
+      <div class="newsletter-perks">
+        <span>10% Off First Order</span>
+        <span>Early Access Drops</span>
+        <span>No Spam Ever</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="logo_still.png" alt="Was Boutique" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<span style=\'font-family:\'Playfair Display\',serif;font-size:20px;font-weight:700;color:#fff;\'>WAS <span style=\'color:#e91e8c;\'>BOUTIQUE</span></span>')"/>
+        <p>Born from a bond between sisters. Every piece is chosen with love, intention, and a little bit of sparkle.</p>
+        <div class="footer-socials">
+          <!-- Instagram -->
+          <div class="footer-social-icon"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+          <!-- TikTok -->
+          <div class="footer-social-icon"><svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></div>
+          <!-- Facebook -->
+          <div class="footer-social-icon"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></div>
+          <!-- Pinterest -->
+          <div class="footer-social-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.24 2.65 7.86 6.39 9.29-.09-.78-.17-1.98.03-2.83.19-.77 1.26-5.35 1.26-5.35s-.32-.65-.32-1.61c0-1.5.87-2.63 1.96-2.63.93 0 1.38.7 1.38 1.53 0 .94-.6 2.34-.91 3.64-.26 1.08.54 1.96 1.6 1.96 1.93 0 3.41-2.03 3.41-4.97 0-2.6-1.87-4.42-4.54-4.42-3.09 0-4.91 2.32-4.91 4.72 0 .93.36 1.93.8 2.48.09.11.1.2.07.31-.08.34-.26 1.08-.3 1.23-.05.2-.16.24-.37.15-1.39-.65-2.26-2.68-2.26-4.32 0-3.51 2.55-6.74 7.36-6.74 3.86 0 6.86 2.75 6.86 6.41 0 3.83-2.41 6.9-5.75 6.9-1.12 0-2.18-.58-2.54-1.27l-.69 2.59c-.25.97-.93 2.18-1.38 2.92.95.29 1.95.44 2.99.44 5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg></div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="#">New Arrivals</a></li>
+          <li><a href="#">Rings</a></li>
+          <li><a href="#">Necklaces</a></li>
+          <li><a href="#">Earrings</a></li>
+          <li><a href="#">Bracelets</a></li>
+          <li><a href="#">Sets & Bundles</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Help</h4>
+        <ul>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Shipping Info</a></li>
+          <li><a href="#">Returns</a></li>
+          <li><a href="#">Ring Sizing Guide</a></li>
+          <li><a href="#">Care Instructions</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Was Boutique. Made with <span>♥</span> — We Are Sisters.</p>
+      <div class="footer-payment-icons">
+        <div class="pay-badge">VISA</div>
+        <div class="pay-badge">MC</div>
+        <div class="pay-badge">AMEX</div>
+        <div class="pay-badge">PAYPAL</div>
+        <div class="pay-badge">APPLE PAY</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ══════════════════════════════════════
+       JAVASCRIPT
+  ══════════════════════════════════════ -->
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* ── NAV scroll state ── */
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    /* ── HERO VIDEO SCRUB ── */
+    const video = document.getElementById('hero-video');
+    const heroPinEl = document.getElementById('hero-pin');
+    const heroLogoOverlay = document.getElementById('hero-logo-overlay');
+    const scrollIndicator = document.getElementById('scroll-indicator');
+
+    video.addEventListener('loadedmetadata', initScrub);
+    // Fallback: if metadata already loaded
+    if (video.readyState >= 1) initScrub();
+
+    function initScrub() {
+      const duration = video.duration;
+      if (!duration) return;
+
+      // Scrub pin — scroll distance = 150vh so we have generous scrub room
+      const scrubTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '#hero-wrapper',
+          start: 'top top',
+          end: '+=200%',
+          scrub: 1,
+          pin: '#hero-pin',
+          anticipatePin: 1,
+          onUpdate: (self) => {
+            // Drive video currentTime
+            video.currentTime = self.progress * duration;
+
+            // Fade out scroll indicator early
+            if (self.progress > 0.05) {
+              gsap.to(scrollIndicator, { opacity: 0, duration: 0.4, overwrite: true });
+            } else {
+              gsap.to(scrollIndicator, { opacity: 1, duration: 0.4, overwrite: true });
+            }
+
+            // Fade in logo at 80% progress
+            const logoOpacity = Math.max(0, (self.progress - 0.75) / 0.25);
+            gsap.set(heroLogoOverlay, { opacity: logoOpacity });
+          }
+        }
+      });
+
+      // Subtle Ken-Burns-ish scale on the video
+      scrubTl.fromTo(video, { scale: 1.05 }, { scale: 1.0, ease: 'none' });
+    }
+
+    /* ── REVEAL ON SCROLL ── */
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => observer.observe(el));
+
+    /* ── PRODUCT FILTER ── */
+    function filterProducts(btn, cat) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cards = document.querySelectorAll('.product-card');
+      cards.forEach(card => {
+        const match = cat === 'all' || card.dataset.category === cat;
+        card.style.display = match ? '' : 'none';
+      });
+    }
+
+    /* ── NEWSLETTER form ── */
+    const newsletterForm = document.querySelector('.newsletter-form');
+    if (newsletterForm) {
+      newsletterForm.querySelector('button').addEventListener('click', (e) => {
+        e.preventDefault();
+        const input = newsletterForm.querySelector('input');
+        if (input.value.includes('@')) {
+          input.value = '';
+          input.placeholder = '✦ You\'re on the list — welcome, sister!';
+        }
+      });
+    }
+
+    /* ── Smooth smooth video decode init ── */
+    document.addEventListener('DOMContentLoaded', () => {
+      video.load();
+    });
+  </script>
+
+</body>
+</html>
